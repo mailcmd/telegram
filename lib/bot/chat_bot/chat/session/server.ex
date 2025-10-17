@@ -154,6 +154,8 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
       {:stop, bot_state} ->
         Chat.Registry.unregister(state.token, state.chat_id)
         {:stop, :normal, put_in(state.bot_state, bot_state)}
+
+      :stop -> {:stop, :normal}
     end
   end
 end
