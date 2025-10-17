@@ -79,7 +79,7 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
 
     state = %State{token: token, chatbot_behaviour: chatbot_behaviour, chat_id: chat.id, bot_state: nil}
 
-    chatbot_behaviour.init(chat)
+    chatbot_behaviour.init(chat, token)
     |> case do
       {:ok, bot_state} ->
         {:ok, put_in(state.bot_state, bot_state)}

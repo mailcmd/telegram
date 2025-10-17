@@ -101,6 +101,10 @@ defmodule Telegram.ChatBot do
               {:ok, initial_state :: chat_state()}
               | {:ok, initial_state :: chat_state(), timeout :: timeout()}
 
+  @callback init(chat :: Telegram.ChatBot.Chat.t(), token :: String.t()) ::
+              {:ok, initial_state :: chat_state()}
+              | {:ok, initial_state :: chat_state(), timeout :: timeout()}
+
   @doc """
   Invoked when a chat session is resumed.
 
