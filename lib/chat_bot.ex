@@ -97,9 +97,9 @@ defmodule Telegram.ChatBot do
 
   The `timeout` can be used to schedule actions after a certain period of inactivity.
   """
-  @callback init(chat :: Telegram.ChatBot.Chat.t()) ::
-              {:ok, initial_state :: chat_state()}
-              | {:ok, initial_state :: chat_state(), timeout :: timeout()}
+#  @callback init(chat :: Telegram.ChatBot.Chat.t()) ::
+#              {:ok, initial_state :: chat_state()}
+#              | {:ok, initial_state :: chat_state(), timeout :: timeout()}
 
   @callback init(chat :: Telegram.ChatBot.Chat.t(), token :: String.t()) ::
               {:ok, initial_state :: chat_state()}
