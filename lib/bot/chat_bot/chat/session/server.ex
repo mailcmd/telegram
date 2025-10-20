@@ -137,8 +137,8 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
     end
   end
 
-  defp start_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = _chat, bot_state \\ nil, update \\ %{}) do
-    child_spec = {__MODULE__, {chatbot_behaviour, token, update, bot_state}}
+  defp start_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = chat, bot_state \\ nil, update \\ %{}) do
+    child_spec = {__MODULE__, {chatbot_behaviour, token, Map.put(chat, :update, update) , bot_state}}
 
     Chat.Session.Supervisor.start_child(child_spec, token)
     |> case do
