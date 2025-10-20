@@ -146,7 +146,7 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
       {:error, :max_children} = error ->
         error
 
-      {:error, :not_initiated_yet} = error ->
+      {:error, _} = error ->
         error
     end
   end
