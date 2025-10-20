@@ -141,7 +141,6 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
     child_spec = {__MODULE__, {chatbot_behaviour, token, chat, bot_state}}
 
     Chat.Session.Supervisor.start_child(child_spec, token)
-    |> IO.inspect
     |> case do
       {:ok, _server} = ok ->
         ok
