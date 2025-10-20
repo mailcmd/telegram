@@ -56,6 +56,9 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
 
       {:get_chat_session_server, {:error, :max_children}} ->
         Logger.info("Reached max children, update dropped", bot: chatbot_behaviour, token: token)
+
+      error ->
+        Logger.log(:error, "Unknow error handle_update (#{error})")
     end
 
     :ok
