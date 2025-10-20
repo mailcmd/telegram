@@ -48,7 +48,7 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
   def handle_update(chatbot_behaviour, token, update) do
     with {:get_chat, {:ok, chat}} <- {:get_chat, get_chat(chatbot_behaviour, update)},
          {:get_chat_session_server, {:ok, server}} <-
-           {:get_chat_session_server, get_chat_session_server(chatbot_behaviour, token, chat)} do
+           {:get_chat_session_server, get_chat_session_server(chatbot_behaviour, token, chat, update)} do
       GenServer.cast(server, {:handle_update, update})
     else
       {:get_chat, :ignore} ->
@@ -126,19 +126,19 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
     chatbot_behaviour.get_chat(update_type, Map.get(update, update_type))
   end
 
-  defp get_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = chat) do
+  defp get_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = chat, update \\ %{}) do
     Chat.Registry.lookup(token, chat.id)
     |> case do
       {:ok, _server} = ok ->
         ok
 
       {:error, :not_found} ->
-        start_chat_session_server(chatbot_behaviour, token, chat)
+        start_chat_session_server(chatbot_behaviour, token, chat, nil, update)
     end
   end
 
-  defp start_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = chat, bot_state \\ nil) do
-    child_spec = {__MODULE__, {chatbot_behaviour, token, chat, bot_state}}
+  defp start_chat_session_server(chatbot_behaviour, token, %Telegram.ChatBot.Chat{} = _chat, bot_state \\ nil, update \\ %{}) do
+    child_spec = {__MODULE__, {chatbot_behaviour, token, update, bot_state}}
 
     Chat.Session.Supervisor.start_child(child_spec, token)
     |> case do
