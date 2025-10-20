@@ -37,6 +37,10 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
       {:start, {:error, :max_children} = error} ->
         error
         # coveralls-ignore-stop
+
+      {:start, {:error, :not_initiated_yet} = error} ->
+        error
+        # coveralls-ignore-stop
     end
   end
 
@@ -139,6 +143,9 @@ defmodule Telegram.Bot.ChatBot.Chat.Session.Server do
         ok
 
       {:error, :max_children} = error ->
+        error
+
+      {:error, :not_initiated_yet} = error ->
         error
     end
   end
