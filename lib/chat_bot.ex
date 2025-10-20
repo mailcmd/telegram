@@ -281,6 +281,7 @@ defmodule Telegram.ChatBot do
 
       @impl Telegram.Bot.Dispatch
       def dispatch_update(update, token) do
+        IO.inspect update, label: "XXXXXXXXX"
         Session.Server.handle_update(__MODULE__, token, update)
 
         :ok
