@@ -28,11 +28,13 @@ defmodule Telegram.Poller do
 
   use Supervisor
 
-  @spec start_link(bots: [Types.bot_spec()]) :: Supervisor.on_start()
-  def start_link(bots: bot_specs) do
+  # @spec start_link(bots: [Types.bot_spec()]) :: Supervisor.on_start()
+  @spec start_link(opts :: keyword()) :: Supervisor.on_start()
+  def start_link(opts) do
+    bot_specs = opts[:bots]
     assert_tesla_adapter_config()
 
-    Supervisor.start_link(__MODULE__, bot_specs, name: __MODULE__)
+    Supervisor.start_link(__MODULE__, bot_specs, name: opts[:name] || __MODULE__)
   end
 
   @impl Supervisor
