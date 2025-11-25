@@ -44,7 +44,7 @@ defmodule Telegram.Poller do
         token = Keyword.fetch!(opts, :token)
         allowed_updates = Keyword.get(opts, :allowed_updates, Types.default_allowed_updates())
 
-        id = opts[:id] || Utils.name(Poller.Task, token)
+        id = opts[:name] || Utils.name(Poller.Task, token)
 
         Supervisor.child_spec({Poller.Task, {bot_behaviour_mod, token, allowed_updates}}, id: id)
       end)
