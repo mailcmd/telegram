@@ -34,7 +34,7 @@ defmodule Telegram.Poller do
     bot_specs = opts[:bots]
     assert_tesla_adapter_config()
 
-    Supervisor.start_link(__MODULE__, bot_specs, name: opts[:name] || __MODULE__)
+    Supervisor.start_link(__MODULE__, bot_specs, name: __MODULE__)
   end
 
   @impl Supervisor
@@ -44,7 +44,7 @@ defmodule Telegram.Poller do
         token = Keyword.fetch!(opts, :token)
         allowed_updates = Keyword.get(opts, :allowed_updates, Types.default_allowed_updates())
 
-        id = Utils.name(Poller.Task, token)
+        id = opts[:id] || Utils.name(Poller.Task, token)
 
         Supervisor.child_spec({Poller.Task, {bot_behaviour_mod, token, allowed_updates}}, id: id)
       end)
