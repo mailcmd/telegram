@@ -142,7 +142,7 @@ defmodule Telegram.Poller.Task do
 
     opts =
       [timeout: conf_get_updates_poll_timeout_s(), allowed_updates: {:json, context.allowed_updates}] ++ opts_offset
-IO.inspect context, label: "Telegram.Api.request"
+
     case Telegram.Api.request(context.token, "getUpdates", opts) do
       {:ok, updates} ->
         updates
