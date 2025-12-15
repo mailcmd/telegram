@@ -119,7 +119,7 @@ defmodule Telegram.Poller.Task do
   end
 
   defp set_polling(token) do
-    Logger.info("Checking webhook mode is not active...")
+    Logger.info("Checking webhook mode is not active (token: #{token})...")
 
     {:ok, %{"url" => url}} = retry(fn -> Telegram.Api.request(token, "getWebhookInfo") end)
 
